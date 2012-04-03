@@ -1,0 +1,80 @@
+           BR       main
+           .INCLUDE  "PEP2.pep1"
+           .APPEND  "DIV.pep2"
+
+           .MACRO     DIVA  divisor',ams'
+           PUSHA
+           LDA        divisor',ams'
+           POPX
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVX  divisor',ams'
+           LDA        divisor',ams'
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVM  m',ams1',divisor',ams2'
+           LDA        divisor',ams2'
+           LDX        m',ams1'
+           CALL       DIV
+           .MACROEND
+
+m1:  .WORD 0
+m2:  .WORD 0
+qr:  .WORD 0
+title:     .ASCII   "DIVTester.pep2...\n\x00"
+merror:    .ASCII   "oVerflow \x00"
+main:      NOP0
+           STRO     title,d
+;Test the DIVA, DIVX and DIVM macros and DIV subprogram
+;-----------------------------------------------------
+loop:      DECI     m1,d
+           DECI     m2,d
+           TEST     m1,d
+           BRNE     goon
+           TEST     m2,d
+           BREQ     done
+goon:      NOP0
+;Test DIVA -------------------------
+           LDA      m1,d
+           DECOA
+           CHARO    '/',i
+           DECO     m2,d
+           CHARO    '=',i
+           DIVA     m2,d
+           BRNV     next1
+           STRO     merror,d
+next1:     DECOA
+           CHARO    '&',i
+           DECOX
+           CHARO    '\n',i
+;Test DIVX -------------------------
+           LDX      m1,d
+           DECOX
+           CHARO    '/',i
+           DECO     m2,d
+           CHARO    '=',i
+           DIVX     m2,d
+           BRNV     next2
+           STRO     merror,d
+next2:     DECOA
+           CHARO    '&',i
+           DECOX
+           CHARO    '\n',i
+;Test DIVM ------------------------
+           DECO     m1,d
+           CHARO    '/',i
+           DECO     m2,d
+           CHARO    '=',i
+           DIVM     m1,d,m2,d
+           BRNV     next3
+           STRO     merror,d
+next3:     DECOA     
+           CHARO    '&',i
+           DECOX
+           CHARO    '\n',i
+;----------------------------------
+           BR       loop
+done:      STOP
+           .END

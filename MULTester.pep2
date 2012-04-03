@@ -1,0 +1,75 @@
+           BR       main
+           .INCLUDE  "PEP2.pep1"
+           .APPEND  "MUL.pep1"
+
+           .MACRO     MULA  multiplier',ams'
+           PUSH       multiplier',ams'
+           PUSHA
+           CALL       MUL
+           .MACROEND
+
+           .MACRO     MULX  multiplier',ams'
+           PUSH       multiplier',ams'
+           PUSHX
+           CALL       MUL
+           .MACROEND
+
+           .MACRO     MUL   m',ams1',multiplier',ams2'
+           LDA        m',ams1'
+           MULA       multiplier',ams2'
+           STA        m',ams1'
+           .MACROEND
+
+m1:  .WORD 0
+m2:  .WORD 0
+p:   .WORD 0
+title:     .ASCII   "MULTester.pep2...\n\x00"
+merror:    .ASCII   "oVerflow \x00"
+main:      NOP0
+           STRO     title,d
+;Illustrate the Scapacty subprogram
+;----------------------------------
+loop:      DECI     m1,d
+           DECI     m2,d
+           TEST     m1,d
+           BRNE      goon
+           TEST     m2,d
+           BREQ     done
+goon:      NOP0
+;Test MUL -------------------------
+           MOVE     m1,d,p,d
+           DECO     p,d
+           CHARO    '*',i
+           DECO     m2,d
+           CHARO    '=',i
+           MUL      p,d,m2,d
+           BRNV     next1
+           STRO     merror,d
+next1:     DECO     p,d
+           CHARO    '\n',i
+;Test MULA ------------------------
+           LDA      m1,d
+           DECOA
+           CHARO    '*',i
+           DECO     m2,d
+           CHARO    '=',i
+           MULA     m2,d
+           BRNV     next2
+           STRO     merror,d
+next2:     DECOA     
+           CHARO    '\n',i
+;Test MULX ------------------------
+           LDX      m1,d
+           DECOX
+           CHARO    '*',i
+           DECO     m2,d
+           CHARO    '=',i
+           MULX     m2,d
+           BRNV     next3
+           STRO     merror,d
+next3:     DECOA     
+           CHARO    '\n',i
+;----------------------------------
+           BR       loop
+done:      STOP
+           .END
