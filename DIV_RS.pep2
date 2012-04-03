@@ -1,0 +1,10 @@
+         .GLOBAL   DIV
+;*******************************
+;***Division (Quotient and Remainder) Subprogram***
+;*******************************
+;**Local Variables
+;*******************************
+DIV:     NOP0
+         CLRA
+         CLRX
+         RET0
