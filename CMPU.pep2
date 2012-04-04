@@ -33,5 +33,16 @@ cmpC:   LDA int2,d ;loaf intw into a
         BRC shCmp   ;if (MSB == 1) do the short Cmp
         BR lngAlgo ;if (MSB != 1) do the longAlgo
 shCmp:  CPM int1, s, int2, s ;compare int1 to int2
-        RET0
+        BRGT retGT
+        BRLT retLT
+        BREQ retEQ
 lngAlgo:RET0
+
+
+retGT: LDA 1,i
+       RET0
+retLT: LDA -1,i
+       RET0
+retEQ: LDA 0,i
+       RET0
+
