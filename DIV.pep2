@@ -1,0 +1,23 @@
+
+
+.INCLUDE "DIV_RS.pep2"
+.INCLUDE "CMPU.pep2"
+
+
+           .MACRO     DIVA  divisor',ams'
+           PUSHA
+           LDA        divisor',ams'
+           POPX
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVX  divisor',ams'
+           LDA        divisor',ams'
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVM  m',ams1',divisor',ams2'
+           LDA        divisor',ams2'
+           LDX        m',ams1'
+           CALL       DIV
+           .MACROEND
