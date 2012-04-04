@@ -1,4 +1,5 @@
            BR       main
+           .INCLUDE  "PEP2.pep1"
            .APPEND  "DIV.pep2"
 
 m1:  .WORD 0

@@ -1,8 +1,4 @@
-
-.INCLUDE  "PEP2.pep1"
 .INCLUDE "DIV_RS.pep2"
-.INCLUDE "CMPU.pep2"
-
 
            .MACRO     DIVA  divisor',ams'
            PUSHA
