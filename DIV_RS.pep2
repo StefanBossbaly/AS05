@@ -3,8 +3,26 @@
 ;***Division (Quotient and Remainder) Subprogram***
 ;*******************************
 ;**Local Variables
+divd:	.BLOCK 2
+divs:	.BLOCK 2
+diff:	.BLOCK 2
+rem:	.BLOCK 2
 ;*******************************
-DIV:     NOP0
-         CLRA
-         CLRX
-         RET0
+DIVRS:  NOP0 ; assuming the agruements are in the X and A registers
+		STX divd,d
+		STX diff,d
+		STA divs,d
+		
+		LDX 0,i				; loop connter and quotient
+loop:	CMP diff,d,divs,d	; Compare instruction from pep2
+		BRLT SetRem			;ending condition
+		LDA divd,d			;|
+		SUBA divs,d			;|Substracts divs from divd
+		STA diff,d			;stores a new difference
+		INCX				;increments X register
+		BR loop				;
+		
+SetRem:	LDA diff,d	;|
+		STA rem,d	;|sets the remainder 
+        
+        RET 0
