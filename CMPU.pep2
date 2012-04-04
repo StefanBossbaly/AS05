@@ -24,23 +24,24 @@ CMPU:   NOP0
         BRC cmpC   ;if (MSB == 1) branch to compare carry
         LDA int2,s ;else
         ROLA       ;rotate left
-        BRC lngAlgo ;if (MSB != 1) do the longAlgo
+        BRC sofCmp ;if (MSB != 1) do the sofCmp
         BR shCmp   ;do the short Cmp
 cmpC:   LDA int2,d ;loaf intw into a
         ROLA       ;rotate left
-        BRC shCmp   ;if (MSB == 1) do the short Cmp
-        BR lngAlgo ;if (MSB != 1) do the longAlgo
+        BRC shCmp  ;if (MSB == 1) do the short Cmp
+        BR sofCmp  ;if (MSB != 1) do the sofCmp
 shCmp:  CPM int1, s, int2, s ;compare int1 to int2
-        BRGT retGT
-        BRLT retLT
-        BREQ retEQ
-lngAlgo:RET0
-
-
-retGT: LDA 1,i
-       RET0
-retLT: LDA -1,i
-       RET0
-retEQ: LDA 0,i
-       RET0
+        BRGT retGT ;if (int1 > int2) goto retGT
+        BRLT retLT ;if (int2 > int1) goto retLT
+        BREQ retEQ ;if (int1 == int2) goto retEQ
+sofCmp: LDA int1,s ;load int1 into a
+        ROLA       ;rotate left
+        BRC retGT  ;if (MSB == 1) return 1
+        BR retLT   ;else return -1
+retGT: LDA 1,i     ;load 1
+       RET0        ;return 1
+retLT: LDA -1,i    ;load -1
+       RET0        ;return -1
+retEQ: LDA 0,i     ;load 0
+       RET0        ;return 0
 
