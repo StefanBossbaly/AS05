@@ -1,0 +1,36 @@
+           .GLOBAL   CMPU
+
+           .MACRO     CMPU  int1',ams1',int2',ams2'
+           SAVEA                  ;save the a register
+           LDA        int1',ams1' ;load int1 into a
+           STA        -2,s        ;store int1 onto the stack
+           LDA        int2',ams2' ;load int2 into a
+           STA        -4,s        ;store int2 onto the stack
+           SUPSP      4,i         ;update stack pointer now! (so we don't screw up addressing modes)
+           CALL       CMPU        ;call subroutine
+           ADDSP      4,i         ;reclaim memory
+           RESTOREA               ;restore a
+           .MACROEND
+;*******************************
+;***Compare Unsigned Ints***
+;*******************************
+;**Parameters
+int1:      .EQUATE    2        ;first unsigned int
+int2:      .EQUATE    4        ;second unsigned int
+;**Local Variables
+;*******************************
+CMPU:   NOP0
+        LDA int1,s ;load int1 into a
+        ROLA       ;rotate left
+        BRC cmpC   ;if (MSB == 1) branch to compare carry
+        LDA int2,s ;else
+        ROLA       ;rotate left
+        BRC lngAlgo ;if (MSB != 1) do the longAlgo
+        BR shCmp   ;do the short Cmp
+cmpC:   LDA int2,d ;loaf intw into a
+        ROLA       ;rotate left
+        BRC shCmp   ;if (MSB == 1) do the short Cmp
+        BR lngAlgo ;if (MSB != 1) do the longAlgo
+shCmp:  CPM int1, s, int2, s ;compare int1 to int2
+        RET0
+lngAlgo:RET0
