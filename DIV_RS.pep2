@@ -29,4 +29,4 @@ SetRem:	LDA diff,d	;|
 	    STA rem,d	;|sets the remainder 
         STX quo,d   ;sets quotient
         
-        RET 0
+        RET0
