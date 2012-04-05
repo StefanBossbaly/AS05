@@ -15,7 +15,6 @@ DIV:    NOP0                   ; assuming the agruements are in the X and A regi
 		STX divd,d
 		STX diff,d
 		STA divs,d
-		
 		LDX 0,i				; loop connter and quotient
 loop:	LDA diff,d
         CPA divs,d			;|CMP diff,d,divs,d-Compare instruction from pep2 
@@ -24,9 +23,7 @@ loop:	LDA diff,d
 		STA diff,d			;stores a new difference
 		ADDX 1,i			;increments X register 
 		BR loop				;
-		
 SetRem:	LDA diff,d	;|
 	    STA rem,d	;|sets the remainder 
-        STX quo,d   ;sets quotient
-        
+        STX quo,d   ;sets quotient        
         RET0
