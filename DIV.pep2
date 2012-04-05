@@ -1,5 +1,10 @@
-.INCLUDE "DIV_RS.pep2"
+           ;Here are all our includes!
+           ;PLEASE just include DIV.pep2
+           .INCLUDE "DIV_RS.pep2"
+           .INCLUDE "CMPU.pep2"
+           .INCLUDE "PEP2.pep1"
 
+           ;Macros for Division since it can be implemented different ways
            .MACRO     DIVA  divisor',ams'
            PUSHA
            LDA        divisor',ams'
