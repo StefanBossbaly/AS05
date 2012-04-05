@@ -11,7 +11,7 @@ diff:	.BLOCK 2
 rem:	.BLOCK 2
 quo:    .BLOCK 2
 ;*******************************
-DIVRS:  NOP0                   ; assuming the agruements are in the X and A registers 
+DIV:    NOP0                   ; assuming the agruements are in the X and A registers 
 		STX divd,d
 		STX diff,d
 		STA divs,d
