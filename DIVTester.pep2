@@ -1,6 +1,24 @@
            BR       main
            .INCLUDE  "PEP2.pep1"
-           .APPEND  "DIV.pep2"
+           .APPEND  "DIV_RS.pep2"
+           
+           .MACRO     DIVA  divisor',ams'
+           PUSHA
+           LDA        divisor',ams'
+           POPX
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVX  divisor',ams'
+           LDA        divisor',ams'
+           CALL       DIV
+           .MACROEND
+
+           .MACRO     DIVM  m',ams1',divisor',ams2'
+           LDA        divisor',ams2'
+           LDX        m',ams1'
+           CALL       DIV
+           .MACROEND
 
 m1:  .WORD 0
 m2:  .WORD 0
