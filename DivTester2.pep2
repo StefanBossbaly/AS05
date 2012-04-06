@@ -1,27 +1,20 @@
-           BR       main
+           BR main
            .INCLUDE  "PEP2.pep1"
            .INCLUDE  "CMPU.pep2"
-           .APPEND  "DIV_RS.pep2"
-           
-           .MACRO     DIVA  divisor',ams'
-           PUSHA
-           LDA        divisor',ams'
-           POPX
-           CALL       DIV
-           .MACROEND
+           .APPEND  "DIV_RD.pep2"
 
-           .MACRO     DIVX  divisor',ams'
-           LDA        divisor',ams'
+           .MACRO     DIVM  m',ams1',divisor1',ams2',divisor2',ams3'
+           LDA        divisor2',ams3'
+           STA        -2,s
+           LDA        divisor1',ams2'
+           STA        -4,s
+           LDA        m',ams1'
+           STA        -6,s
+           SUBSP      6,i
            CALL       DIV
-           .MACROEND
-
-           .MACRO     DIVM  m',ams1',divisor',ams2'
-           LDA        divisor',ams2'
-           LDX        m',ams1'
-           CALL       DIV
+           ADDSP      6,i
            .MACROEND
            
-main:      CMPU 1,i,3,i
+main:      DIVM  0x005F,i,0x0015,i,0x0086,i
            STOP
            .END
-
