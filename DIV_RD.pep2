@@ -24,6 +24,7 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           STA      A,d             ;store a into A
            CMPU     A,d,M,d         ;unsigned compare A to M
            TSTA                     ;set status bits
            BRGE     ovrflw          ;if (A >= M) branch ovrflw
