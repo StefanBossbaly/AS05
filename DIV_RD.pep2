@@ -24,8 +24,9 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is now LSB of Q
-           SUBU     A,d,M,d         ;unsigned subtract M from A
-           BRV      end             ;If we have overflow stop
+           CMPU     A,d,M,d         ;unsigned compare A to M
+           TSTA                     ;set status bits
+           BRGE     ovrflw          ;if (A >= M) branch ovrflw
            LDX      31,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i
            BREQ     end
@@ -57,3 +58,4 @@ incre:     SUBX     1,i             ;counter--
 end:       LDA      A,d             ;load A into a
            LDX      Q,d             ;load Q into x
            RET0                     ;return to calling program
+ovrflw:    RETO                     ;TODO set oVerflow
