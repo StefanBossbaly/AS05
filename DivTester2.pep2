@@ -15,6 +15,6 @@
            ADDSP      6,i
            .MACROEND
            
-main:      DIVM  0x005F,i,0x0015,i,0x0086,i
+main:      DIVM  5,i,0,i,10,i
            STOP
            .END
