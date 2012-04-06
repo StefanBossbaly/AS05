@@ -58,4 +58,4 @@ incre:     SUBX     1,i             ;counter--
 end:       LDA      A,d             ;load A into a
            LDX      Q,d             ;load Q into x
            RET0                     ;return to calling program
-ovrflw:    RETO                     ;TODO set oVerflow
+ovrflw:    RET0                     ;TODO set oVerflow
