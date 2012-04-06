@@ -1,6 +1,7 @@
            BR main
            .INCLUDE  "PEP2.pep1"
            .INCLUDE  "CMPU.pep2"
+           .INCLUDE  "SUBU.pep2"
            .APPEND  "DIV_RD.pep2"
 
            .MACRO     DIVM  m',ams1',divisor1',ams2',divisor2',ams3'

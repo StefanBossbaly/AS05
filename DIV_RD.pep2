@@ -24,7 +24,7 @@ DIV:     MOVE divisor,s,M,d  ;move the stack variable to M
          STA Q,d             ;store Q
          LDA A,d             ;load A into a
          ROLA                ;rotate left so the MSB of A is noe LSB of Q
-         SUBA M,d            ;subtract M from A TODO this needs to be unsigned subtraction
+         SUBU A,d,M,d        ;unsigned subtract M from A
          BRV end             ;If we have overflow stop
          LDX 31,i            ;n-1 where n is the number of bits
 loop:    CPX 0,i
@@ -37,7 +37,7 @@ loop:    CPX 0,i
          LDA A,d             ;load A into a
          ROLA                ;rotate left so the MSB of A is noe LSB of Q
          STA A,d             ;store A
-         SUBA M,d            ;subtract M from A TODO this needs to be unsigned subtraction
+         SUBU A,d,M,d        ;unsigned subtract M from A
          CPA 0,i             ;compare A - M to 0
          BRGE set1           ;if (A - M >= 0) branch set 1
          LDA 0,i             ;else set carry to 0
