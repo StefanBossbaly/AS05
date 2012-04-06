@@ -9,6 +9,15 @@
          CALL       CMPU                              ;call subroutine
          ADDSP      4,i                               ;reclaim memory
          .MACROEND
+         
+         .MACRO     CMPUA    int1',ams1'
+         STA        -4,s                              ;load a onto stack
+         LDA        int1',ams1'                       ;load int1 into a
+         STA        -2,s                              ;store int1 onto the stack
+         SUBSP      4,i                               ;update stack pointer now! (so we don't screw up addressing modes)
+         CALL       CMPU                              ;call subroutine
+         ADDSP      4,i                               ;reclaim memory
+         .MACROEND
 
 ;*******************************************************************************************************************************
 ;***Compare Unsigned Ints***
