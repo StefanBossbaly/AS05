@@ -1,59 +1,59 @@
-         .GLOBAL   DIV
+           .GLOBAL  DIV
 ;*******************************
 ;***Division (Quotient and Remainder) Subprogram***
 ;*******************************
 ;**Local Variables
-M: .WORD  0 ;Divisor
-A: .WORD  0 ;Double word Dividend
-Q: .WORD  0
-divisor:  .EQUATE 2 ;Divisor location on the stack
-dividedA: .EQUATE 4 ;Double Dividend location on the stack
-dividedQ: .EQUATE 6
+M:         .WORD    0               ;Divisor
+A:         .WORD    0               ;Double word Dividend
+Q:         .WORD    0
+divisor:   .EQUATE  2               ;Divisor location on the stack
+dividedA:  .EQUATE  4               ;Double Dividend location on the stack
+dividedQ:  .EQUATE  6
 ;*******************************
-DIV:     MOVE divisor,s,M,d  ;move the stack variable to M
-         MOVE dividedA,s,A,d ;move the stack variable to A
-         MOVE dividedQ,s,Q,d ;move the stack variable to Q
-         BINO M,d            ;Debugging only
-         CHARO '\n',i
-         BINO A,d
-         BINO Q,d            ;Debugging only
-         LDA 0,i             ;set carry to 0
-         RORA                ;
-         LDA Q,d             ;load Q into a
-         ROLA                ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
-         STA Q,d             ;store Q
-         LDA A,d             ;load A into a
-         ROLA                ;rotate left so the MSB of A is noe LSB of Q
-         SUBU A,d,M,d        ;unsigned subtract M from A
-         BRV end             ;If we have overflow stop
-         LDX 31,i            ;n-1 where n is the number of bits
-loop:    CPX 0,i
-         BREQ end
-         LDA 0,i             ;set carry to 0
-         RORA                ;
-         LDA Q,d             ;load Q into a
-         ROLA                ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
-         STA Q,d             ;store Q
-         LDA A,d             ;load A into a
-         ROLA                ;rotate left so the MSB of A is noe LSB of Q
-         STA A,d             ;store A
-         SUBU A,d,M,d        ;unsigned subtract M from A
-         CPA 0,i             ;compare A - M to 0
-         BRGE set1           ;if (A - M >= 0) branch set 1
-         LDA 0,i             ;else set carry to 0
-         RORA                ;
-         LDA Q,d             ;reload Q
-         ROLA                ;set LSB of Q to 0
-         STA Q,d             ;store Q
-         BR incre
-set1:    STA A,d             ;store the value of A - M as A
-         LDA 1,i             ;else set carry to 1
-         RORA                ;
-         LDA Q,d             ;reload Q
-         ROLA                ;set LSB of Q to 1
-         STA Q,d             ;store Q
-incre:   SUBX 1,i            ;counter--
-         BR loop
-end:     LDA A,d
-         LDX Q,d
-         RET0
+DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
+           MOVE     dividedA,s,A,d  ;move the stack variable to A
+           MOVE     dividedQ,s,Q,d  ;move the stack variable to Q
+           BINO     M,d             ;Debugging only
+           CHARO    '\n',i
+           BINO     A,d
+           BINO     Q,d             ;Debugging only
+           LDA      0,i             ;set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;load Q into a
+           ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
+           STA      Q,d             ;store Q
+           LDA      A,d             ;load A into a
+           ROLA                     ;rotate left so the MSB of A is noe LSB of Q
+           SUBU     A,d,M,d         ;unsigned subtract M from A
+           BRV      end             ;If we have overflow stop
+           LDX      31,i            ;n-1 where n is the number of bits
+loop:      CPX      0,i
+           BREQ     end
+           LDA      0,i             ;set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;load Q into a
+           ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
+           STA      Q,d             ;store Q
+           LDA      A,d             ;load A into a
+           ROLA                     ;rotate left so the MSB of A is noe LSB of Q
+           STA      A,d             ;store A
+           SUBU     A,d,M,d         ;unsigned subtract M from A
+           CPA      0,i             ;compare A - M to 0
+           BRGE     set1            ;if (A - M >= 0) branch set 1
+           LDA      0,i             ;else set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;reload Q
+           ROLA                     ;set LSB of Q to 0
+           STA      Q,d             ;store Q
+           BR       incre
+set1:      STA      A,d             ;store the value of A - M as A
+           LDA      1,i             ;else set carry to 1
+           RORA                     ;
+           LDA      Q,d             ;reload Q
+           ROLA                     ;set LSB of Q to 1
+           STA      Q,d             ;store Q
+incre:     SUBX     1,i             ;counter--
+           BR       loop            ;loop
+end:       LDA      A,d             ;load A into a
+           LDX      Q,d             ;load Q into x
+           RET0                     ;return to calling program
