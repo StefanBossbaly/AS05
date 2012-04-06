@@ -13,6 +13,10 @@ dividedQ: .EQUATE 6
 DIV:     MOVE divisor,s,M,d  ;move the stack variable to M
          MOVE dividedA,s,A,d ;move the stack variable to A
          MOVE dividedQ,s,Q,d ;move the stack variable to Q
+         BINO M,d            ;Debugging only
+         CHARO '\n',i
+         BINO A,d
+         BINO Q,d            ;Debugging only
          LDA 0,i             ;set carry to 0
          RORA                ;
          LDA Q,d             ;load Q into a
