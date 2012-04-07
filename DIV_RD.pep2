@@ -21,9 +21,9 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            BINO     M,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
            BINO     A,d             ;Debugging only
-		   CHARO    ' ',i           ;Debugging only
+           CHARO    ' ',i           ;Debugging only
            BINO     Q,d             ;Debugging only
-		   CHARO    '\n',i          ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -38,13 +38,13 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            LDX      15,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i             ;compare loop counter to 0
            BREQ     end             ;branch if loop counter is 0
-		   STRO     cycS,d          ;Debugging only
-		   DECOX                    ;Debugging only
-		   CHARO    '\n',i          ;Debugging only
+           STRO     cycS,d          ;Debugging only
+           DECOX                    ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            BINO     A,d             ;Debugging only
-		   CHARO    ' ',i           ;Debugging only
+           CHARO    ' ',i           ;Debugging only
            BINO     Q,d             ;Debugging only
-		   CHARO    '\n',i          ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -53,15 +53,15 @@ loop:      CPX      0,i             ;compare loop counter to 0
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is noe LSB of Q
            STA      A,d             ;store A
-		   STRO     shiftAQ,d       ;Debugging only
-		   BINO     A,d             ;Debugging only
-		   CHARO    ' ',i           ;Debugging only
+           STRO     shiftAQ,d       ;Debugging only
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
            BINO     Q,d             ;Debugging only
-		   CHARO    '\n',i          ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            SUBU     A,d,M,d         ;unsigned subtract M from A
            CPA      0,i             ;compare A - M to 0
            BRGE     set1            ;if (A - M >= 0) branch set 1
-		   STRO     setL0,d         ;Debugging only
+           STRO     setL0,d         ;Debugging only
            LDA      0,i             ;else set carry to 0
            RORA                     ;
            LDA      Q,d             ;reload Q
