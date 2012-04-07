@@ -67,8 +67,11 @@ loop:      CPX      0,i             ;compare loop counter to 0
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
            SUBU     A,d,M,d         ;unsigned subtract M from A
-           CPA      0,i             ;compare A - M to 0 (should be unsigned!)
+           STA      A,d             ;store unsigned subtraction M from A to A
+           CMPU     A,d,0,i         ;compare A - M to 0
+           TSTA
            BRGE     set1            ;if (A - M >= 0) branch set 1
+           ADD      A,d,M,d         ;A = A + M
            LDA      Q,d             ;else reload Q
            RORA                     ;rotate Q right
            STA      Q,d             ;store Q
@@ -83,8 +86,7 @@ loop:      CPX      0,i             ;compare loop counter to 0
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
            BR       dcre
-set1:      STA      A,d             ;store the value of A - M as A
-           LDA      Q,d             ;reload Q
+set1:      LDA      Q,d             ;reload Q
            RORA                     ;rotate Q right
            STA      Q,d             ;store Q
            LDA      1,i             ;else set carry to 1
