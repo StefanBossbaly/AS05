@@ -3,6 +3,11 @@
 ;***Division (Quotient and Remainder) Subprogram***
 ;*******************************
 ;**Local Variables
+cycS:      .ASCII   "---Cycle Number: \x00"
+subS:      .ASCII   "Subtracting... \n\x00"
+setL0:     .ASCII   "LSB is 0\n\x00"
+setL1:     .ASCII   "LSB is 1\n\x00"
+shiftAQ:   .ASCII   "Shift AQ left\n\x00"
 M:         .WORD    0               ;Divisor
 A:         .WORD    0               ;Double word Dividend
 Q:         .WORD    0
@@ -16,7 +21,9 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            BINO     M,d             ;Debugging only
            CHARO    '\n',i
            BINO     A,d
-           BINO     Q,d             ;Debugging only
+		   CHARO    ' ',i
+           BINO     Q,d             
+		   CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -31,6 +38,9 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            LDX      15,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i
            BREQ     end
+		   STRO     cycS,d
+		   DECOX
+		   CHARO    '\n',i
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -39,16 +49,23 @@ loop:      CPX      0,i
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is noe LSB of Q
            STA      A,d             ;store A
+		   STRO     shiftAQ,d       ;Debugging only
+		   BINO     A,d             ;
+		   CHARO    ' ',i           ;
+           BINO     Q,d             ;
+		   CHARO    '\n',i          ;Debugging only
            SUBU     A,d,M,d         ;unsigned subtract M from A
            CPA      0,i             ;compare A - M to 0
            BRGE     set1            ;if (A - M >= 0) branch set 1
+		   STRO     setL0,d         ;Debugging only
            LDA      0,i             ;else set carry to 0
            RORA                     ;
            LDA      Q,d             ;reload Q
            ROLA                     ;set LSB of Q to 0
            STA      Q,d             ;store Q
            BR       incre
-set1:      STA      A,d             ;store the value of A - M as A
+set1:      STRO     setL1,d         ;Debugging only
+           STA      A,d             ;store the value of A - M as A
            LDA      1,i             ;else set carry to 1
            RORA                     ;
            LDA      Q,d             ;reload Q
