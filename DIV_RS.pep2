@@ -1,5 +1,5 @@
-; Hardik Patel
-; NEEDS MAJOR CLEANING UP!!!!!!
+; Uses the repeated substration algorythm to divide 2 numbers, 
+;and returns them into the X and A register. 
          .GLOBAL  DIV
 ;*******************************
 ;***Division (Quotient and Remainder) Subprogram***
@@ -8,22 +8,20 @@
 divd:    .BLOCK   2
 divs:    .BLOCK   2
 diff:    .BLOCK   2
-rem:     .BLOCK   2
-quo:     .BLOCK   2
 ;*******************************
 DIV:     NOP0             ; assuming the agruements are in the X and A registers
-         STX      divd,d
-         STX      diff,d
-         STA      divs,d
+         STX      divd,d  ;
+         STX      diff,d  ;
+         STA      divs,d  ;
          LDX      0,i     ; loop connter and quotient
+         
 loop:    LDA      diff,d
-         CPA      divs,d  ;|CMP diff,d,divs,d-Compare instruction from pep2
-         BRLT     SetRem  ;ending condition
-         SUBA     divs,d  ;Substracts divs from diff
-         STA      diff,d  ;stores a new difference
-         ADDX     1,i     ;increments X register
-         BR       loop
+         CPA      divs,d  ; |CMP diff,d,divs,d-Compare instruction from pep2
+         BRLT     SetRem  ; ending condition
+         SUBA     divs,d  ; Substracts divs from diff
+         STA      diff,d  ; stores a new difference
+         ADDX     1,i     ; increments X register
+         BR       loop    ;
+         
 SetRem:  LDA      diff,d  ;|
-         STA      rem,d   ;|sets the remainder
-         STX      quo,d   ;sets quotient
          RET0
