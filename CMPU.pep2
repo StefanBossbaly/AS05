@@ -21,6 +21,13 @@
 
 ;*******************************************************************************************************************************
 ;***Compare Unsigned Ints***
+;Compares to unsigned integers (Note method does not set the status bits. Run a TSTA command to set the status bits
+;after calling this subprogram)
+;Returns 1 in the a regester if the first integer was greater that the second
+;Returns 0 in the a regester if the two integers are equal
+;Returns -1 in the a regester if the first integer was less that the second
+;
+;Author: Stefan Bossbaly
 ;*******************************************************************************************************************************
 ;**Parameters
 int1:    .EQUATE    2                                 ;first unsigned int
