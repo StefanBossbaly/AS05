@@ -19,10 +19,10 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            MOVE     dividedA,s,A,d  ;move the stack variable to A
            MOVE     dividedQ,s,Q,d  ;move the stack variable to Q
            BINO     M,d             ;Debugging only
-           CHARO    '\n',i
-           BINO     A,d
-		   CHARO    ' ',i
-           BINO     Q,d             
+           CHARO    '\n',i          ;Debugging only
+           BINO     A,d             ;Debugging only
+		   CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
 		   CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
@@ -36,11 +36,11 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            TSTA                     ;set status bits
            BRGE     ovrflw          ;if (A >= M) branch ovrflw
            LDX      15,i            ;n-1 where n is the number of bits
-loop:      CPX      0,i
-           BREQ     end
-		   STRO     cycS,d
-		   DECOX
-		   CHARO    '\n',i
+loop:      CPX      0,i             ;compare loop counter to 0
+           BREQ     end             ;branch if loop counter is 0
+		   STRO     cycS,d          ;Debugging only
+		   DECOX                    ;Debugging only
+		   CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -50,9 +50,9 @@ loop:      CPX      0,i
            ROLA                     ;rotate left so the MSB of A is noe LSB of Q
            STA      A,d             ;store A
 		   STRO     shiftAQ,d       ;Debugging only
-		   BINO     A,d             ;
-		   CHARO    ' ',i           ;
-           BINO     Q,d             ;
+		   BINO     A,d             ;Debugging only
+		   CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
 		   CHARO    '\n',i          ;Debugging only
            SUBU     A,d,M,d         ;unsigned subtract M from A
            CPA      0,i             ;compare A - M to 0
