@@ -61,10 +61,13 @@ loop:      CPX      0,i             ;compare loop counter to 0
            SUBU     A,d,M,d         ;unsigned subtract M from A
            CPA      0,i             ;compare A - M to 0 (should be unsigned!)
            BRGE     set1            ;if (A - M >= 0) branch set 1
+           LDA      Q,d             ;else reload Q
+           RORA                     ;rotate Q right
+           STA      Q,d             ;store Q
            LDA      0,i             ;else set carry to 0
            RORA                     ;
            LDA      Q,d             ;reload Q
-           ROLA                     ;set LSB of Q to 0
+           ROLA                     ;rotate Q left setting the LSB to 0
            STA      Q,d             ;store Q
            STRO     setL0,d         ;Debugging only
            BINO     A,d             ;Debugging only
@@ -73,10 +76,13 @@ loop:      CPX      0,i             ;compare loop counter to 0
            CHARO    '\n',i          ;Debugging only
            BR       dcre
 set1:      STA      A,d             ;store the value of A - M as A
+           LDA      Q,d             ;reload Q
+           RORA                     ;rotate Q right
+           STA      Q,d             ;store Q
            LDA      1,i             ;else set carry to 1
            RORA                     ;
            LDA      Q,d             ;reload Q
-           ROLA                     ;set LSB of Q to 1
+           ROLA                     ;rotate Q left setting the LSB to 1
            STA      Q,d             ;store Q
            STRO     setL1,d         ;Debugging only
            BINO     A,d             ;Debugging only
