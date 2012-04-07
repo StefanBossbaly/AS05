@@ -35,6 +35,14 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            CMPU     A,d,M,d         ;unsigned compare A to M
            TSTA                     ;set status bits
            BRGE     ovrflw          ;if (A >= M) branch ovrflw
+           LDA      Q,d             ;load Q
+           RORA                     ;rotate Q right
+           STA      Q,d             ;store Q
+           LDA      0,i             ;else set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;reload Q
+           ROLA                     ;rotate Q left setting the LSB to 0
+           STA      Q,d             ;store Q
            LDX      15,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i             ;compare loop counter to 0
            BREQ     end             ;branch if loop counter is 0
