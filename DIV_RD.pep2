@@ -43,6 +43,10 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            LDA      Q,d             ;reload Q
            ROLA                     ;rotate Q left setting the LSB to 0
            STA      Q,d             ;store Q
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            LDX      15,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i             ;compare loop counter to 0
            BREQ     end             ;branch if loop counter is 0
@@ -66,12 +70,9 @@ loop:      CPX      0,i             ;compare loop counter to 0
            CHARO    ' ',i           ;Debugging only
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
-           SUBU     A,d,M,d         ;unsigned subtract M from A
-           STA      A,d             ;store unsigned subtraction M from A to A
-           CMPU     A,d,0,i         ;compare A - M to 0
+           CMPU     A,d,M,d         ;compare A to M
            TSTA
-           BRGE     set1            ;if (A - M >= 0) branch set 1
-           ADD      A,d,M,d         ;A = A + M
+           BRGE     set1            ;if (A >= M) branch set 1
            LDA      Q,d             ;else reload Q
            RORA                     ;rotate Q right
            STA      Q,d             ;store Q
@@ -86,7 +87,9 @@ loop:      CPX      0,i             ;compare loop counter to 0
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
            BR       dcre
-set1:      LDA      Q,d             ;reload Q
+set1:      SUBU     A,d,M,d         ;Subtract M from A
+           STA      A,d             ;store
+           LDA      Q,d             ;reload Q
            RORA                     ;rotate Q right
            STA      Q,d             ;store Q
            LDA      1,i             ;else set carry to 1
