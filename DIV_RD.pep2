@@ -1,6 +1,12 @@
            .GLOBAL  DIV
 ;*******************************
 ;***Division (Quotient and Remainder) Subprogram***
+;Divides using the Restoring Division algorithm for 16 bit quantanties
+;Note that this subprogram only deals with unsigned numbers and uses
+;the SUBU and CMPU subprograms inorder to subtract and compare
+;unsigned integers, so please include them in your main
+;
+;Author: Stefan Bossbaly
 ;*******************************
 ;**Local Variables
 cycS:      .ASCII   "---Cycle Number: \x00"
