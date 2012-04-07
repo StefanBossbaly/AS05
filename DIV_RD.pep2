@@ -63,7 +63,7 @@ loop:      CPX      0,i             ;compare loop counter to 0
            LDA      Q,d             ;reload Q
            ROLA                     ;set LSB of Q to 0
            STA      Q,d             ;store Q
-           BR       incre
+           BR       dcre
 set1:      STRO     setL1,d         ;Debugging only
            STA      A,d             ;store the value of A - M as A
            LDA      1,i             ;else set carry to 1
@@ -71,7 +71,7 @@ set1:      STRO     setL1,d         ;Debugging only
            LDA      Q,d             ;reload Q
            ROLA                     ;set LSB of Q to 1
            STA      Q,d             ;store Q
-incre:     SUBX     1,i             ;counter--
+dcre:      SUBX     1,i             ;counter--
            BR       loop            ;loop
 end:       LDA      A,d             ;load A into a
            LDX      Q,d             ;load Q into x
