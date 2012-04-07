@@ -41,6 +41,10 @@ loop:      CPX      0,i             ;compare loop counter to 0
 		   STRO     cycS,d          ;Debugging only
 		   DECOX                    ;Debugging only
 		   CHARO    '\n',i          ;Debugging only
+           BINO     A,d             ;Debugging only
+		   CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+		   CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
