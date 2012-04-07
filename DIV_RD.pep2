@@ -51,7 +51,7 @@ loop:      CPX      0,i             ;compare loop counter to 0
            ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
-           ROLA                     ;rotate left so the MSB of A is noe LSB of Q
+           ROLA                     ;rotate left so the MSB of A is now LSB of Q
            STA      A,d             ;store A
            STRO     shiftAQ,d       ;Debugging only
            BINO     A,d             ;Debugging only
