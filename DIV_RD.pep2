@@ -61,20 +61,28 @@ loop:      CPX      0,i             ;compare loop counter to 0
            SUBU     A,d,M,d         ;unsigned subtract M from A
            CPA      0,i             ;compare A - M to 0
            BRGE     set1            ;if (A - M >= 0) branch set 1
-           STRO     setL0,d         ;Debugging only
            LDA      0,i             ;else set carry to 0
            RORA                     ;
            LDA      Q,d             ;reload Q
            ROLA                     ;set LSB of Q to 0
            STA      Q,d             ;store Q
+           STRO     setL0,d         ;Debugging only
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            BR       dcre
-set1:      STRO     setL1,d         ;Debugging only
-           STA      A,d             ;store the value of A - M as A
+set1:      STA      A,d             ;store the value of A - M as A
            LDA      1,i             ;else set carry to 1
            RORA                     ;
            LDA      Q,d             ;reload Q
            ROLA                     ;set LSB of Q to 1
            STA      Q,d             ;store Q
+           STRO     setL1,d         ;Debugging only
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
 dcre:      SUBX     1,i             ;counter--
            BR       loop            ;loop
 end:       LDA      A,d             ;load A into a
