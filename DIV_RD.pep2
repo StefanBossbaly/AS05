@@ -59,7 +59,7 @@ loop:      CPX      0,i             ;compare loop counter to 0
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
            SUBU     A,d,M,d         ;unsigned subtract M from A
-           CPA      0,i             ;compare A - M to 0
+           CPA      0,i             ;compare A - M to 0 (should be unsigned!)
            BRGE     set1            ;if (A - M >= 0) branch set 1
            LDA      0,i             ;else set carry to 0
            RORA                     ;
