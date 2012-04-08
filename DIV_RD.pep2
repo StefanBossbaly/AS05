@@ -9,11 +9,6 @@
 ;Author: Stefan Bossbaly
 ;*******************************
 ;**Local Variables
-cycS:      .ASCII   "---Cycle Number: \x00"
-subS:      .ASCII   "Subtracting... \n\x00"
-setL0:     .ASCII   "LSB is 0\n\x00"
-setL1:     .ASCII   "LSB is 1\n\x00"
-shiftAQ:   .ASCII   "Shift AQ left\n\x00"
 M:         .WORD    0               ;Divisor
 A:         .WORD    0               ;Double word Dividend
 Q:         .WORD    0
@@ -24,12 +19,6 @@ dividedQ:  .EQUATE  6
 DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            MOVE     dividedA,s,A,d  ;move the stack variable to A
            MOVE     dividedQ,s,Q,d  ;move the stack variable to Q
-           BINO     M,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -49,20 +38,9 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            LDA      Q,d             ;reload Q
            ROLA                     ;rotate Q left setting the LSB to 0
            STA      Q,d             ;store Q
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
            LDX      15,i            ;n-1 where n is the number of bits
 loop:      CPX      0,i             ;compare loop counter to 0
            BREQ     end             ;branch if loop counter is 0
-           STRO     cycS,d          ;Debugging only
-           DECOX                    ;Debugging only
-           CHARO    '\n',i          ;Debugging only
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
            LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
@@ -71,11 +49,6 @@ loop:      CPX      0,i             ;compare loop counter to 0
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is now LSB of Q
            STA      A,d             ;store A
-           STRO     shiftAQ,d       ;Debugging only
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
            CMPU     A,d,M,d         ;compare A to M
            TSTA
            BRGE     set1            ;if (A >= M) branch set 1
@@ -87,11 +60,6 @@ loop:      CPX      0,i             ;compare loop counter to 0
            LDA      Q,d             ;reload Q
            ROLA                     ;rotate Q left setting the LSB to 0
            STA      Q,d             ;store Q
-           STRO     setL0,d         ;Debugging only
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
            BR       dcre
 set1:      SUBU     A,d,M,d         ;Subtract M from A
            STA      A,d             ;store
@@ -103,11 +71,6 @@ set1:      SUBU     A,d,M,d         ;Subtract M from A
            LDA      Q,d             ;reload Q
            ROLA                     ;rotate Q left setting the LSB to 1
            STA      Q,d             ;store Q
-           STRO     setL1,d         ;Debugging only
-           BINO     A,d             ;Debugging only
-           CHARO    ' ',i           ;Debugging only
-           BINO     Q,d             ;Debugging only
-           CHARO    '\n',i          ;Debugging only
 dcre:      SUBX     1,i             ;counter--
            BR       loop            ;loop
 end:       LDA      A,d             ;load A into a
