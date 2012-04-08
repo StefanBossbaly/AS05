@@ -113,4 +113,6 @@ dcre:      SUBX     1,i             ;counter--
 end:       LDA      A,d             ;load A into a
            LDX      Q,d             ;load Q into x
            RET0                     ;return to calling program
-ovrflw:    RET0                     ;TODO set oVerflow
+ovrflw:    LDA      0x8000,i        ;set oVerflow bit
+           SUBA     1,i             ;
+           RET0                     ;return to calling program
