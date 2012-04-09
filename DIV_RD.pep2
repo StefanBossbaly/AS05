@@ -6,6 +6,10 @@
 ;the SUBU and CMPU subprograms inorder to subtract and compare
 ;unsigned integers, so please include them in your main
 ;
+;***Returns***
+;The quotient in the a register
+;The remainder in the x register
+;
 ;Author: Stefan Bossbaly
 ;*******************************
 ;**Local Variables

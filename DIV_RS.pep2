@@ -1,5 +1,7 @@
 ; Uses the repeated substration algorythm to divide 2 numbers, 
-;and returns them into the X and A register. 
+; and returns them into the X and A register. 
+;
+;Authors: Hardik Patel, Stefan Bossbaly
          .GLOBAL  DIV
 ;*******************************
 ;***Division (Quotient and Remainder) Subprogram***

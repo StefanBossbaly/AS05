@@ -14,7 +14,9 @@
 ;***Subtract Unsigned Ints***
 ;Uses the two's compliement method of subtracting unsigned integers by taking
 ;two's compliement of the second integer and adding it to the first integer.
-;Returns the value of (int1 - int2) in the a register
+;
+;***Returns***
+;Returns the unsigned value of (int1 - int2) in the a register
 ;
 ;Author: Stefan Bossbaly
 ;*************************************************************************************************************
