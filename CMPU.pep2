@@ -44,7 +44,7 @@ CMPU:    NOP0
          ROLA                                         ;rotate left
          BRC        sofCmp                            ;if (MSB != 1) do the sofCmp
          BR         shCmp                             ;do the short Cmp
-cmpC:    LDA        int2,d                            ;loaf intw into a
+cmpC:    LDA        int2,d                            ;load int2 into a
          ROLA                                         ;rotate left
          BRC        shCmp                             ;if (MSB == 1) do the short Cmp
          BR         sofCmp                            ;if (MSB != 1) do the sofCmp
