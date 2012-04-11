@@ -15,13 +15,13 @@ DIV:     NOP0                    ; assuming the agruements are in the X and A re
          STX      divd,d         ;
          STX      diff,d         ;
          STA      divs,d         ;
-         LDX      0,i            ; loop connter and quotient
+         CLRX                    ; loop connter and quotient
 loop:    CMPU     diff,d,divs,d  ; |CMP diff,d,divs,d-Compare instruction from pep2
          TSTA                    ; sets status bits
          BRLT     setRem         ; ending condition
          SUBU     diff,d,divs,d  ; Substracts divs from diff
          STA      diff,d         ; stores a new difference
-         ADDX     1,i            ; increments X register
+         INCX                    ; increments X register
          BR       loop           ;
 setRem:  LDA      diff,d         ;|
          RET0
