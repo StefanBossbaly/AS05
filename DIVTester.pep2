@@ -1,6 +1,8 @@
            BR       main
            .INCLUDE  "PEP2.pep1"
-           .APPEND  "DIV_RS.pep2"
+           .INCLUDE  "CMPU.pep2"
+           .INCLUDE  "SUBU.pep2"
+           .APPEND   "DIV_RS.pep2"
            
            .MACRO     DIVA  divisor',ams'
            PUSHA
