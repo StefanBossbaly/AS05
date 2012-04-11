@@ -3,7 +3,7 @@
 ;***Division (Quotient and Remainder) Subprogram***
 ;Divides using the Repeated Subtraction algorithm
 ;Note that this subprogram only deals with unsigned numbers and uses
-;the SUBU and CMPU subprograms inorder to subtract and compare
+;the SUBU and CMPU subprograms inorder to subtract and compare 
 ;unsigned integers, so please include them in your main
 ;*******************************
 ;**Local Variables
