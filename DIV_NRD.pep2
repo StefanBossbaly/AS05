@@ -1,10 +1,69 @@
-         .GLOBAL   DIV
+           .GLOBAL  DIV
 ;*******************************
 ;***Division (Quotient and Remainder) Subprogram***
+;Divides using the Non-Restoring Division algorithm for 16 bit quantanties
+;Note that this subprogram only deals with unsigned numbers and uses
+;the SUBU and CMPU subprograms inorder to subtract and compare
+;unsigned integers, so please include them in your main
+;
+;***Returns***
+;The quotient in the a register
+;The remainder in the x register
+;
+;Author: Stefan Bossbaly
 ;*******************************
 ;**Local Variables
-;*******************************
-DIV:     NOP0
-         CLRA
-         CLRX
-         RET0
+M:         .WORD    0               ;Divisor
+A:         .WORD    0               ;Double word Dividend
+Q:         .WORD    0
+divisor:   .EQUATE  2               ;Divisor location on the stack
+dividedA:  .EQUATE  4               ;Double Dividend location on the stack
+dividedQ:  .EQUATE  6
+DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
+           MOVE     dividedA,s,A,d  ;move the stack variable to A
+           MOVE     dividedQ,s,Q,d  ;move the stack variable to Q
+           LDX      0,i             ;init loop counter
+           LDA      0,i             ;set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;load Q into a
+           ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
+           STA      Q,d             ;store Q
+           LDA      A,d             ;load A into a
+           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           STA      A,d             ;store a into A
+           SUBU     A,d,M,d         ;subtract M from A
+           STA      A,d             ;store a into A
+loop:      CMPU     A,d,0,i         ;compare A to 0
+           TSTA                     ;set the status bits
+           BRLT     negA            ;branch if A is negative
+           LDA      1,i             ;set carry to 1
+           RORA                     ;
+           LDA      Q,d             ;load Q into a
+           ROLA                     ;roatate left so the MSB is in the carry bit and 1 is the LSB of Q
+           STA      Q,d             ;store Q
+           LDA      A,d             ;load A into a
+           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           STA      A,d             ;store a into A
+           SUBU     A,d,M,d         ;subtract M from A
+           STA      A,d             ;store a into A
+           BR       incr
+negA:      LDA      0,i             ;set carry to 0
+           RORA                     ;
+           LDA      Q,d             ;load Q into a
+           ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
+           STA      Q,d             ;store Q
+           LDA      A,d             ;load A into a
+           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           STA      A,d             ;store a into A
+           ADD      A,d,M,d         ;A = A + M
+incr:      CPX      15,i            ;compare count with n - 1
+           BREQ     endLp           ;if (n - 1 == count) end
+           INCX                     ;otherwise increment x
+           BR       loop            ;loop
+endLp:     CMPU     A,d,0,i         ;compare A to 0
+           TSTA                     ;set the status bits
+           BRGE     return          ;if (a >= 0) return
+           ADD      A,d,M,d         ;A = A + M
+return:    LDA      A,d             ;load A into a
+           LDX      Q,d             ;load Q into x
+           RET0                     ;return to calling program
