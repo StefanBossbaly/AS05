@@ -1,0 +1,59 @@
+           .GLOBAL    MUL
+;*******************************
+;***Multiplication Subprogram***
+;*******************************
+;**Parameters
+mplier:        .EQUATE    2 ;multiplier
+mcand:         .EQUATE    4 ;multiplicand
+;**Local Variables
+T:          .WORD    0               ;Divisor
+Mu:         .WORD    0               ;Double word Dividend
+Mp:         .WORD    0 ;
+B:          .WORD    0 ;
+;*******************************
+MUL:       MOVE mcand,s,T,d ;Place Multiplicand in T
+           MOVE mplier,s,Mp,d ;Place Multiplier in Mp
+           LDA 0x0000,i
+           STA Mu,d
+           STA B,d          ;Place zeroes in Mu and B
+           LDX 0,i          ;init loop counter
+loop:      CPX 15,i         ;compare loop counter to n - 1
+           BREQ endLp       ;if (i == n - 1) end loop
+           LDA Mp,d         ;load Mp into a
+           ROLA             ;rotate right
+           BRC lsb1         ;branch if LSB is 1
+           LDA 1,i          ;load 1 into a
+           CPA B,d          ;compare B with 1
+           BRNE shift       ;branch if they are not equal
+           ADD Mu,d,T,d     ;add T from Mu
+           BR shift         ;shift
+lsb1:      LDA 0,i          ;load 0 into a
+           CPA B,d          ;compare B with 0
+           BRNE shift       ;branch if they are not equal
+           SUB Mu,d,T,d     ;subtract T from Mu
+shift:     LDA Mu,d         ;first shift Mu
+           ROLA             ;check the MSB
+           BRC mu1          ;the MSB is 1
+           LDA 0,i          ;load 0
+           RORA             ;set carry bit to 0
+           LDA Mu,d         ;load Mu into a
+           ROLA             ;rotate Mu so that the MSB is 0
+           STA Mu,d         ;store
+           BR shiftMp       ;now shift Mp
+mu1:       LDA 1,i          ;load 1
+           RORA             ;set carry bit to 1
+           LDA Mu,d         ;load Mu into a
+           ROLA             ;rotate Mu so that the MSB is 1
+           STA Mu,d         ;store
+shiftMp:   RORA             ;rotate right so the LSB of Mu is now MSB of Mp
+           STA Mp,d         ;store Mp
+           BRC b1           ;set B to 1
+           LDA 0,i          ;else set B to 0
+           STA B,d          ;store B
+           BR incr          ;branch to incr
+b1:        LDA 1,i          ;set B to 1
+           STA B,d          ;store B
+incr:      INCX             ;increment the loop counter
+           BR loop          ;loop
+endLp:     LDA Mp,d         ;product is in mp
+           RET0
