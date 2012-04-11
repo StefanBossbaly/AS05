@@ -31,10 +31,8 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is now LSB of Q
            STA      A,d             ;store a into A
-           SUBU     A,d,M,d         ;subtract M from A
-           STA      A,d             ;store a into A
-loop:      CMPU     A,d,0,i         ;compare A to 0
-           TSTA                     ;set the status bits
+           SUB      A,d,M,d         ;subtract M from A
+loop:      CPM      A,d,0,i         ;compare A to 0
            BRLT     negA            ;branch if A is negative
            LDA      1,i             ;set carry to 1
            RORA                     ;
@@ -44,8 +42,7 @@ loop:      CMPU     A,d,0,i         ;compare A to 0
            LDA      A,d             ;load A into a
            ROLA                     ;rotate left so the MSB of A is now LSB of Q
            STA      A,d             ;store a into A
-           SUBU     A,d,M,d         ;subtract M from A
-           STA      A,d             ;store a into A
+           SUB      A,d,M,d         ;subtract M from A
            BR       incr
 negA:      LDA      0,i             ;set carry to 0
            RORA                     ;
@@ -60,8 +57,7 @@ incr:      CPX      15,i            ;compare count with n - 1
            BREQ     endLp           ;if (n - 1 == count) end
            INCX                     ;otherwise increment x
            BR       loop            ;loop
-endLp:     CMPU     A,d,0,i         ;compare A to 0
-           TSTA                     ;set the status bits
+endLp:     CPM      A,d,0,i         ;compare A to 0
            BRGE     return          ;if (a >= 0) return
            ADD      A,d,M,d         ;A = A + M
 return:    LDA      A,d             ;load A into a
