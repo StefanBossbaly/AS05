@@ -1,6 +1,6 @@
            BR       main
            .INCLUDE  "PEP2.pep1"
-           .APPEND  "MUL.pep1"
+           .APPEND  "MUL_BO.pep2"
 
            .MACRO     MULA  multiplier',ams'
            PUSH       multiplier',ams'
