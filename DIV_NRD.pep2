@@ -5,6 +5,7 @@
 ;Note that this subprogram only deals with unsigned numbers and uses
 ;the SUBU and CMPU subprograms inorder to subtract and compare
 ;unsigned integers, so please include them in your main
+;http://devel-rok.informatik.hu-berlin.de/svn/TI2/2006/folien/pdf/eng_ca12.pdf
 ;
 ;***Returns***
 ;The quotient in the a register
