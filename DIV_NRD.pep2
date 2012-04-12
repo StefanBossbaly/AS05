@@ -5,13 +5,18 @@
 ;Note that this subprogram only deals with unsigned numbers and uses
 ;the SUBU and CMPU subprograms inorder to subtract and compare
 ;unsigned integers, so please include them in your main
-;http://devel-rok.informatik.hu-berlin.de/svn/TI2/2006/folien/pdf/eng_ca12.pdf
 ;
 ;***Returns***
 ;The quotient in the a register
 ;The remainder in the x register
 ;
-;Author: Stefan Bossbaly
+;NOTE! This program does not work! This is an off by one error
+;when calculating the remainder! We used the following link as a 
+;guide to implement this algorithm. There is debugging code to help show the
+;problem.
+;http://devel-rok.informatik.hu-berlin.de/svn/TI2/2006/folien/pdf/eng_ca12.pdf
+;
+;Author: Stefan Bossbaly, Hardik Patel, Zack Haupt, Pat Collins
 ;*******************************
 ;**Local Variables
 M:         .WORD    0               ;Divisor
