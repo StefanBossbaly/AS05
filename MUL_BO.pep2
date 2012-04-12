@@ -6,10 +6,10 @@
 mplier:        .EQUATE    2 ;multiplier
 mcand:         .EQUATE    4 ;multiplicand
 ;**Local Variables
-T:          .WORD    0               ;Divisor
-Mu:         .WORD    0               ;Double word Dividend
-Mp:         .WORD    0 ;
-B:          .WORD    0 ;
+T:          .WORD    0
+Mu:         .WORD    0 
+Mp:         .WORD    0
+B:          .WORD    0
 ;*******************************
 MUL:       MOVE mcand,s,T,d ;Place Multiplicand in T
            MOVE mplier,s,Mp,d ;Place Multiplier in Mp
@@ -17,8 +17,8 @@ MUL:       MOVE mcand,s,T,d ;Place Multiplicand in T
            STA Mu,d
            STA B,d          ;Place zeroes in Mu and B
            LDX 0,i          ;init loop counter
-loop:      CPX 15,i         ;compare loop counter to n - 1
-           BREQ endLp       ;if (i == n - 1) end loop
+loop:      CPX 16,i         ;compare loop counter to n
+           BREQ endLp       ;if (i == n) end loop
            LDA Mp,d         ;load Mp into a
            ROLA             ;rotate right
            BRC lsb1         ;branch if LSB is 1
