@@ -22,8 +22,8 @@ dividedA:  .EQUATE  4               ;Double Dividend location on the stack
 dividedQ:  .EQUATE  6
 cycS:      .ASCII   "---Cycle Number: \x00"
 subS:      .ASCII   "Subtracting... \n\x00"
-setL0:     .ASCII   "LSB is 0\n\x00"
-setL1:     .ASCII   "LSB is 1\n\x00"
+negS:     .ASCII   "A is neg\n\x00"
+posS:     .ASCII   "A is postive\n\x00"
 shiftAQ:   .ASCII   "Shift AQ left\n\x00"
 
 DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
@@ -42,14 +42,15 @@ DIV:       MOVE     divisor,s,M,d   ;move the stack variable to M
            ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
-           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           ROLA                     ;rotate left so the LSB of A is now MSB of Q
            STA      A,d             ;store a into A
            SUB      A,d,M,d         ;subtract M from A
            BINO     A,d             ;Debugging only
            CHARO    ' ',i           ;Debugging only
            BINO     Q,d             ;Debugging only
            CHARO    '\n',i          ;Debugging only
-loop:      STRO     cycS,d          ;Debugging only
+loop:      NOP0
+           STRO     cycS,d          ;Debugging only
            DECOX                    ;Debugging only
            CHARO    '\n',i          ;Debugging only
            BINO     A,d             ;Debugging only
@@ -58,25 +59,52 @@ loop:      STRO     cycS,d          ;Debugging only
            CHARO    '\n',i          ;Debugging only
            CPM      A,d,0,i         ;compare A to 0
            BRLT     negA            ;branch if A is negative
+           STRO     posS,d          ;Debugging only
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            LDA      1,i             ;set carry to 1
            RORA                     ;
            LDA      Q,d             ;load Q into a
            ROLA                     ;roatate left so the MSB is in the carry bit and 1 is the LSB of Q
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
-           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           ROLA                     ;rotate left so the LSB of A is now MSB of Q
            STA      A,d             ;store a into A
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            SUB      A,d,M,d         ;subtract M from A
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            BR       incr
-negA:      LDA      0,i             ;set carry to 0
+negA:      NOP0
+           STRO     negS,d          ;Debugging only
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
+           LDA      0,i             ;set carry to 0
            RORA                     ;
            LDA      Q,d             ;load Q into a
            ROLA                     ;roatate left so the MSB is in the carry bit and 0 is the LSB of Q
            STA      Q,d             ;store Q
            LDA      A,d             ;load A into a
-           ROLA                     ;rotate left so the MSB of A is now LSB of Q
+           ROLA                     ;rotate left so the LSB of A is now MSB of Q
            STA      A,d             ;store a into A
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging only
            ADD      A,d,M,d         ;A = A + M
+           BINO     A,d             ;Debugging only
+           CHARO    ' ',i           ;Debugging only
+           BINO     Q,d             ;Debugging only
+           CHARO    '\n',i          ;Debugging onl
 incr:      CPX      15,i            ;compare count with n - 1
            BREQ     endLp           ;if (n - 1 == count) end
            INCX                     ;otherwise increment x
