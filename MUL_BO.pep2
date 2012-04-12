@@ -2,6 +2,15 @@
 ;*******************************
 ;***Multiplication Subprogram***
 ;*******************************
+;Multiplies two numbers using the Booth Multiplication Algorithm.
+;Accepts two signed integer values and returns a signed integer
+;value. Note that all integers are WORD lenght.
+;
+;***Returns***
+;The product in the a register
+;
+;Author: Stefan Bossbaly, Hardik Patel, Zack Haupt, Pat Collins
+;*******************************
 ;**Parameters
 mplier:        .EQUATE    2 ;multiplier
 mcand:         .EQUATE    4 ;multiplicand
