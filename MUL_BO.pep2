@@ -32,20 +32,10 @@ lsb1:      LDA 0,i          ;load 0 into a
            BRNE shift       ;branch if they are not equal
            SUB Mu,d,T,d     ;subtract T from Mu
 shift:     LDA Mu,d         ;first shift Mu
-           ROLA             ;check the MSB
-           BRC mu1          ;the MSB is 1
-           LDA 0,i          ;load 0
-           RORA             ;set carry bit to 0
-           LDA Mu,d         ;load Mu into a
-           ROLA             ;rotate Mu so that the MSB is 0
-           STA Mu,d         ;store
-           BR shiftMp       ;now shift Mp
-mu1:       LDA 1,i          ;load 1
-           RORA             ;set carry bit to 1
-           LDA Mu,d         ;load Mu into a
-           ROLA             ;rotate Mu so that the MSB is 1
-           STA Mu,d         ;store
-shiftMp:   RORA             ;rotate right so the LSB of Mu is now MSB of Mp
+           ASRA             ;shift Mu arithmetically
+           STA Mu,d         ;store Mu
+shiftMp:   LDA Mp,d
+           RORA             ;rotate right so the LSB of Mu is now MSB of Mp
            STA Mp,d         ;store Mp
            BRC b1           ;set B to 1
            LDA 0,i          ;else set B to 0
