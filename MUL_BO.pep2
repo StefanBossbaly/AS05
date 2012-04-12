@@ -20,7 +20,7 @@ MUL:       MOVE mcand,s,T,d ;Place Multiplicand in T
 loop:      CPX 16,i         ;compare loop counter to n
            BREQ endLp       ;if (i == n) end loop
            LDA Mp,d         ;load Mp into a
-           ROLA             ;rotate right
+           RORA             ;rotate right
            BRC lsb1         ;branch if LSB is 1
            LDA 1,i          ;load 1 into a
            CPA B,d          ;compare B with 1
